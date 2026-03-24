@@ -68,8 +68,12 @@ fn main() -> Result<(), Box<dyn Error>> {
 
     println!("Tiempo total: {:?}", start.elapsed());
     println!("Cantidad de palabras distintas: {}", result.len());
-    // Imprimir todo el hashmap en datasets enormes puede ser inmanejable:
-    // println!("{:?}", result);
+    
+    // Guardar HashMap en CSV. Si falla, devolver Err.
+    let out_path = PathBuf::from(concat!(env!("CARGO_MANIFEST_DIR"), "/wordcount.csv"));
+    write_wordcount_csv(&out_path, &result)?;
+
+    println!("CSV generado en: {:?}", out_path);
 
     Ok(())
 }
